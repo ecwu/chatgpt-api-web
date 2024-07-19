@@ -445,7 +445,7 @@ export default function ChatBOX(props: {
   const userInputRef = createRef();
 
   return (
-    <div className="grow flex flex-col p-2">
+    <div className="grow flex flex-col p-2 w-full">
       {showSettings && (
         <Settings
           chatStore={chatStore}
@@ -520,7 +520,12 @@ export default function ChatBOX(props: {
             </ul>
           </div>
         </div>
-        <div class="navbar-center">
+        <div
+          class="navbar-center"
+          onClick={() => {
+            setShowSettings(true);
+          }}
+        >
           <div class="indicator">
             <span class="indicator-item badge badge-primary">
               {chatStore.streamMode ? Tr("STREAM") : Tr("FETCH")}
@@ -838,12 +843,17 @@ export default function ChatBOX(props: {
             <br />
           </p>
         )}
-        <div class="chat chat-start">
-          <div class="chat-header">Prompt</div>
-          <div class="chat-bubble chat-bubble-accent">
-            {chatStore.systemMessageContent}
+        {chatStore.systemMessageContent.trim() && (
+          <div class="chat chat-start">
+            <div class="chat-header">Prompt</div>
+            <div
+              class="chat-bubble chat-bubble-accent cursor-pointer message-content"
+              onClick={() => setShowSettings(true)}
+            >
+              {chatStore.systemMessageContent}
+            </div>
           </div>
-        </div>
+        )}
 
         {chatStore.history.map((_, messageIndex) => (
           <Message
